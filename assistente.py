@@ -37,6 +37,12 @@ def executa_comandos(acao):
         hora = datetime.now().strftime("%H:%M")
         frase = f"Agora são{hora}"
         cria_audio("audio/mensagem.mp3", frase)
+    elif 'desligar computador' in acao and 'uma hora' in acao:
+        os.system("shutdown /s /t 3600")
+    elif 'desligar computador' in acao and 'meia hora' in acao:
+        os.system("shutdown /s /t 1800")
+    elif 'cancelar desligamento' in acao:
+        os.system("shutdown /a")
    
 def main():
     while True:
