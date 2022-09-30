@@ -3,6 +3,7 @@ from playsound import playsound
 import speech_recognition as sr
 import os
 from datetime import datetime
+import sys
 
 def cria_audio(audio, mensagem):
     tts = gTTS(mensagem, lang="pt-br")
@@ -30,7 +31,9 @@ def monitora_audio():
 
 
 def executa_comandos(acao):
-    if 'horas' in acao:
+    if 'fechar assistente' in acao:
+        sys.exit()
+    elif 'horas' in acao:
         hora = datetime.now().strftime("%H:%M")
         frase = f"Agora são{hora}"
         cria_audio("audio/mensagem.mp3", frase)
