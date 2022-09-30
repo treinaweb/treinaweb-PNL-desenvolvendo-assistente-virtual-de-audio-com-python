@@ -62,6 +62,20 @@ def cotacao_moeda(moeda):
         mensagem = f'Cotação do {nome} em {data} é {valor} reais'
         cria_audio("audio/mensagem.mp3", mensagem)
 
+def lista_g6():
+    resposta = get(url, headers=headers)
+    classificao = json.loads(resposta.text)
+    for g6 in classificao[:6]:
+        times = g6["time"]["nome_popular"]
+        cria_audio("audio/mensagem.mp3", times)
+
+def lista_rebaixamento():
+    resposta = get(url, headers=headers)
+    classificao = json.loads(resposta.text)
+    print(classificao)
+    for z4 in classificao[-4:]:
+        times = z4["time"]["nome_popular"]
+        cria_audio("audio/mensagem.mp3", times)
 
 
 def executa_comandos(acao):
@@ -85,6 +99,10 @@ def executa_comandos(acao):
         cotacao_moeda("Euro")
     elif 'cotação' in acao and 'bitcoin' in acao:
         cotacao_moeda("Bitcoin")
+    elif 'times' in acao and 'primeiras colocações' in acao:
+        lista_g6()
+    elif 'times' in acao and 'zona de rebaixamento' in acao:
+        lista_rebaixamento()
    
 def main():
     while True:
