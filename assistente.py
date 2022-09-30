@@ -29,6 +29,13 @@ def monitora_audio():
                 pass
         return mensagem
 
+def ultimas_noticias():
+    site = get('https://news.google.com/rss?gl=BR&hl=pt-BR&ceid=BR:pt-419')
+    noticias = BeautifulSoup(site.text, 'html.parser')
+    for item in noticias.findAll('item')[:5]:
+        mensagem = item.title.text
+        cria_audio("audio/,mensagem.mp3", mensagem)
+
 
 def executa_comandos(acao):
     if 'fechar assistente' in acao:
@@ -43,6 +50,8 @@ def executa_comandos(acao):
         os.system("shutdown /s /t 1800")
     elif 'cancelar desligamento' in acao:
         os.system("shutdown /a")
+     elif 'notícias' in acao:
+        ultimas_noticias()
    
 def main():
     while True:
