@@ -36,6 +36,33 @@ def ultimas_noticias():
         mensagem = item.title.text
         cria_audio("audio/,mensagem.mp3", mensagem)
 
+def cotacao_moeda(moeda):
+    if moeda == "Dólar":
+        requisicao = get('https://economia.awesomeapi.com.br/json/last/USD-BRL')
+        cotacao = requisicao.json()
+        nome = cotacao['USDBRL']['name']
+        data = cotacao['USDBRL']['create_date']
+        valor = cotacao['USDBRL']['bid']
+        mensagem = f'Cotação do {nome} em {data} é {valor} reais'
+        cria_audio("audio/mensagem.mp3", mensagem)
+    elif moeda == "Euro":
+        requisicao = get('https://economia.awesomeapi.com.br/json/last/EUR-BRL')
+        cotacao = requisicao.json()
+        nome = cotacao['EURBRL']['name']
+        data = cotacao['EURBRL']['create_date']
+        valor = cotacao['EURBRL']['bid']
+        mensagem = f'Cotação do {nome} em {data} é {valor} reais'
+        cria_audio("audio/mensagem.mp3", mensagem)
+    elif moeda == "Bitcoin":
+        requisicao = get('https://economia.awesomeapi.com.br/json/last/BTC-BRL')
+        cotacao = requisicao.json()
+        nome = cotacao['BTCBRL']['name']
+        data = cotacao['BTCBRL']['create_date']
+        valor = cotacao['BTCBRL']['bid']
+        mensagem = f'Cotação do {nome} em {data} é {valor} reais'
+        cria_audio("audio/mensagem.mp3", mensagem)
+
+
 
 def executa_comandos(acao):
     if 'fechar assistente' in acao:
@@ -50,8 +77,14 @@ def executa_comandos(acao):
         os.system("shutdown /s /t 1800")
     elif 'cancelar desligamento' in acao:
         os.system("shutdown /a")
-     elif 'notícias' in acao:
+    elif 'notícias' in acao:
         ultimas_noticias()
+    elif 'cotação' in acao and 'dólar' in acao:
+        cotacao_moeda("Dólar")
+    elif 'cotação' in acao and 'euro' in acao:
+        cotacao_moeda("Euro")
+    elif 'cotação' in acao and 'bitcoin' in acao:
+        cotacao_moeda("Bitcoin")
    
 def main():
     while True:
